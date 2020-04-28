@@ -5,6 +5,29 @@ from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 import uuid
 
+
+###########
+# Room Classes
+###########
+### Planning phase
+## Need to get config 
+
+## create 50 x 50 node square
+## move out => in?
+## or in => out
+
+
+
+## Treasure rooms run function from items class
+## How to deal with tool spawns?
+
+
+## Item Class
+# Tools
+# Weapons
+
+
+
 class Room(models.Model):
     title = models.CharField(max_length=50, default="DEFAULT TITLE")
     description = models.CharField(max_length=500, default="DEFAULT DESCRIPTION")
@@ -35,6 +58,17 @@ class Room(models.Model):
         return [p.user.username for p in Player.objects.filter(currentRoom=self.id) if p.id != int(currentPlayerID)]
     def playerUUIDs(self, currentPlayerID):
         return [p.uuid for p in Player.objects.filter(currentRoom=self.id) if p.id != int(currentPlayerID)]
+
+
+###
+# Room Types
+###
+
+class Teasure(Room):
+  pass
+
+
+
 
 
 class Player(models.Model):
