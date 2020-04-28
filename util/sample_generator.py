@@ -34,6 +34,18 @@ class Room:
         Connect two rooms in the given n/s/e/w direction
         '''
         return getattr(self, f"{direction}_to")
+    def get_connections(self):
+      connections = 0
+      if self.n_to is not None:
+        connections += 1
+      if self.e_to is not None:
+        connections += 1
+      if self.s_to is not None:
+        connections += 1
+      if self.w_to is not None:
+        connections += 1
+
+      
 
 
 
@@ -142,10 +154,44 @@ class World:
 
     print('rooms created')
     print(self.grid)
+    print(self.grid[3][4].x)
+
+### helper for directions
+    ## can_n: y-1, x == 0
+    ## can_e: x+1, x == width
+    ## can_s: y+1, y == height
+    ## can_w: x-1, y == 0
     
     ### Now that rooms are created, we can connect them randomly
-    while room_count < num_rooms:
-      pass
+    for row in self.grid:
+      for room in row:
+        x = room.x
+        y = room.y
+        connections = room.get_connections()
+
+    
+    ## get room of room_count ---- Could try the reverse grid section (without reversing) to go row by row in grid
+
+    ## can_n: True
+    ## can_e: True
+    ## can_s: True
+    ## can_w: True
+    ## call get_connections
+      ## need to check if x == 0, or x == width // Blocks connections: y-1, x+1
+      ## need to check if y == 0, or y == height // Blocks connections: x-1, y+1
+      # for each that are considered Blocked, add +1 to connections
+      # flip can_#: False for blocked directions/current directions
+
+    ## Roll random(int) to determine # of connections that will be made.
+
+    #if random is 4 connections:
+      # room.connect_rooms(????????, n) (x, y+1)
+      # room.connect_rooms(?????, e)
+
+
+
+
+
       # if x < width:
         
       #   x += 1
