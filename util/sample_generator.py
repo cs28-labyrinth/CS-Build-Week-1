@@ -1,13 +1,5 @@
 import random
 
-# Sample Python code that can be used to generate rooms in
-# a zig-zag pattern.
-#
-# You can modify generate_rooms() to create your own
-# procedural generation algorithm and use print_rooms()
-# to see the world.
-
-
 class Room:
     def __init__(self, id, name, description, x, y):
         self.id = id
@@ -278,7 +270,10 @@ class World:
               print('AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH')
               print(curr_x, curr_y)
               print(new_x, new_y)
-              room.connect_rooms(room[new_y][new_x], direction_array[direction_roll])
+              new_direction = direction_array[direction_roll]
+              new_room = self.grid[new_y][new_x]
+              print(new_direction)
+              room.connect_rooms(new_room, new_direction)
             connection_attempts = connection_attempts - 1
             connection_complete = True
 
