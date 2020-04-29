@@ -26,7 +26,7 @@ SECRET_KEY = 'xlpgw^*4*+yr1z_cfuc^abu1(=aawj(cp3baa=tc@pro17z4!9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = ['https://cs28labyrinth.herokuapp.com/']
+ALLOWED_HOSTS = ['cs28labyrinth.herokuapp.com/']
 
 
 # Application definition
