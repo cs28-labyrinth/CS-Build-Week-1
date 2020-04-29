@@ -245,15 +245,29 @@ class World:
           while connection_complete is False:
             #Roll for direction  
             direction_roll = random.randint(0,3)
-            print(direction_roll)
+            # print(direction_roll)
             # set directions to array
             directions = [can_n, can_e, can_s, can_w]
-            print(directions[direction_roll])
+            # print(directions[direction_roll])
             if directions[direction_roll] == 'open':
-              print('success')
+              # print('success')
               directions[direction_roll] = 'connected'
               ####### UAOLDFKS;LADSF HOW DOES SOME FUCKING IDIOT CONNECT ROOMS
-              room.connect_rooms()
+              new_x = curr_x
+              new_y = curr_y
+              ## Creating new direction
+              if directions[direction_roll] == 'n':
+                new_y = curr_y + 1
+              if directions[direction_roll] == 'e':
+                new_x = curr_x + 1
+              if directions[direction_roll] == 's':
+                new_y = curr_y - 1
+              if directions[direction_roll] == 'w':
+                new_x = curr_x - 1
+              print('we about to shift')
+              print(curr_x, curr_y)
+              print(new_x, new_y)
+              room.connect_rooms(room[new_y][new_x], directions[direction_roll])
               connection_attempts = connection_attempts - 1
               connection_complete = True
 
