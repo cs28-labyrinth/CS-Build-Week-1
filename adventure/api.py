@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from .models import *
 from rest_framework.decorators import api_view
 import json
+from django.core import serializers
 
 # instantiate pusher
 # pusher = Pusher(app_id=config('PUSHER_APP_ID'), key=config('PUSHER_KEY'), secret=config('PUSHER_SECRET'), cluster=config('PUSHER_CLUSTER'))
@@ -31,7 +32,7 @@ def move(request):
     player = request.user.player
     player_id = player.id
     player_uuid = player.uuid
-    data = json.loads(request.body)
+    data = json.loads(json.dumps(request.data))
     direction = data['direction']
     room = player.room()
     nextRoomID = None
@@ -59,6 +60,11 @@ def move(request):
         players = room.playerNames(player_id)
         return JsonResponse({'name':player.user.username, 'title':room.title, 'description':room.description, 'players':players, 'error_msg':"You cannot move that way."}, safe=True)
 
+@csrf_exempt
+@api_view(["GET"])
+def rooms(request):
+    data = serializers.serialize("json", Room.objects.all())       
+    return JsonResponse({'rooms': json.loads(data)})
 
 @csrf_exempt
 @api_view(["POST"])
