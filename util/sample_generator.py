@@ -1,3 +1,5 @@
+import random
+
 # Sample Python code that can be used to generate rooms in
 # a zig-zag pattern.
 #
@@ -34,16 +36,10 @@ class Room:
         Connect two rooms in the given n/s/e/w direction
         '''
         return getattr(self, f"{direction}_to")
-    def get_connections(self):
-      connections = 0
-      if self.n_to is not None:
-        connections += 1
-      if self.e_to is not None:
-        connections += 1
-      if self.s_to is not None:
-        connections += 1
-      if self.w_to is not None:
-        connections += 1
+    def check_connections(self, direction):
+      if hasattr(self, f"{direction}_to"):
+        return True
+      return False
 
       
 
@@ -58,11 +54,20 @@ class Room:
 ## roll all chances
 
 ## check if room has connection?? skip steps based on # of connections
+#### Room connections betting? =>
 ## 100% to get first connection
 ## 85% to get second connection
 ## 60% to get third
 ## 10% to get 4th
 
+
+### Roll for room Type
+# # % of pie
+# # out of 10?
+# # 4?
+# Treasure room = 0-1
+# Encounter = 3-5
+# Corridor = 7-10
 
 ## can_n: y-1, x == 0
 ## can_e: x+1, x == width
@@ -162,13 +167,147 @@ class World:
     ## can_s: y+1, y == height
     ## can_w: x-1, y == 0
     
-    ### Now that rooms are created, we can connect them randomly
+    #### Now that rooms are created, we can connect them randomly
     for row in self.grid:
       for room in row:
-        x = room.x
-        y = room.y
-        connections = room.get_connections()
+        # Initalizing variables for examining room connections and blockers
+        can_n = 'open'
+        can_e = 'open'
+        can_s = 'open'
+        can_w = 'open'
+        curr_connected = 0
+        curr_x = room.x
+        curr_y = room.y
+        indexed_height = height-1
+        indexed_width = width-1
 
+        ## Checking current room connections
+        if room.check_connections('n'):
+          can_n = 'connected'
+          curr_connected += 1
+        if room.check_connections('e'):
+          can_e = 'connected'
+          curr_connected += 1
+        if room.check_connections('s'):
+          can_s = 'connected'
+          curr_connected += 1
+        if room.check_connections('w'):
+          can_w = 'connected'
+          curr_connected += 1
+
+        ## Generating chance for how many connections ---- I DON'T KNOW HOW RANDOM WORKS
+          ## 100% to get first connection
+          ## 80% to get second connection
+          ## 60% to get third
+          ## 10% to get 4th
+
+        connection_roll = random.randint(0,10)
+        print('connection_roll')
+        print(connection_roll)
+        ###### TO-DO: THIS SHIT DOESN'T WORK. I DON'T UNDERSTAND PERCENT CHANCES WTF???????
+        connection_attempts = 0
+        if connection_roll <= 1:
+          connection_attempts = 4
+        elif connection_roll:
+          connection_attempts = 3
+        elif connection_roll:
+          connection_attempts = 2
+        else:
+          connection_attempts = 1
+
+        ### If the amount of connections rolled == the current amount of connections, nothing left to do!
+        if connection_attempts == curr_connected:
+          return
+
+        ### Now to check which directions are block
+        blocked = 0
+        if curr_x == 0:
+          can_s = 'blocked'
+          blocked += 1
+        if curr_x == indexed_width:
+          can_e = 'blocked'
+          blocked += 1
+        if curr_y == 0:
+          can_w = 'blocked'
+          blocked += 1
+        if curr_y == indexed_height:
+          can_n = 'blocked'
+          blocked += 1
+
+        #### TO-DO: SPECIAL CASE
+        ### If connection_attempts is 4 and blocked are 2, need to only check 2. if connection attempts are 2 and blocked are 2, still need to check 2
+        ## how the fuck do u math that
+
+
+        ### NOW IT'S TIME TO MAKE SOME CONNECTIONS, LADIES AND GENTS
+        while connection_attempts > 0:
+          connection_complete = False
+          while connection_complete is False:
+            #Roll for direction  
+            direction_roll = random.randint(0,3)
+            print(direction_roll)
+            # set directions to array
+            directions = [can_n, can_e, can_s, can_w]
+            print(directions[direction_roll])
+            if directions[direction_roll] == 'open':
+              print('success')
+              directions[direction_roll] = 'connected'
+              ####### UAOLDFKS;LADSF HOW DOES SOME FUCKING IDIOT CONNECT ROOMS
+              room.connect_rooms()
+              connection_attempts = connection_attempts - 1
+              connection_complete = True
+
+
+    # random(1-10) # 10 ^ 2 directions 2 connections
+
+    # - What is possible
+    # - What already is
+    # - Random Chance % of # of connections
+    # - Randomly Roll the direction of those connections
+
+    # MAKE THOSE CONNECTIONS
+
+
+#### ??
+
+### Blockers/directions available??
+### ???
+###### Variables
+### can_n
+### can_e, etc etc
+
+### Check blockers
+### if x or y are cases = False for the appropriate
+
+# if 
+# if 
+# if
+# if
+
+
+
+#### method on the room - Provides back current links
+
+# if ?????
+# can_# = False
+
+
+# ????? Some number of directions = true
+# random(int) = Roll for how many directions we would TRY to go in.  ???
+
+
+
+###### IDEA 72
+
+# ROLL RANDOM(INT)
+# include x directions ### 3
+
+
+
+## 100% to get first connection
+## 85% to get second connection
+## 60% to get third
+## 10% to get 4th
     
     ## get room of room_count ---- Could try the reverse grid section (without reversing) to go row by row in grid
 
