@@ -15,7 +15,7 @@ gunicorn = "*"
 django-heroku = "*"
 django-rest-api = "*"
 psycopg2-binary = "*"
-python-dotenv ="*
+python-dotenv = "*"
 
 [dev-packages]
 
