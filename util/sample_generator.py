@@ -278,60 +278,6 @@ class World:
             connection_complete = True
 
 
-    # random(1-10) # 10 ^ 2 directions 2 connections
-
-    # - What is possible
-    # - What already is
-    # - Random Chance % of # of connections
-    # - Randomly Roll the direction of those connections
-
-    # MAKE THOSE CONNECTIONS
-
-
-
-###################OLD
-    # direction = 1  # 1: east, -1: west
-
-
-    # # While there are rooms to be created...
-    # #??? Do I need this?? What is this initializing???
-    # while room_count < num_rooms:
-
-    #   # 
-    #   # Need to create edge/corner cases to ensure it doesn't try to connect to things that aren't there
-    #   # 
-    #   if direction > 0 and x < size_x - 1:
-    #     room_direction = "e"
-    #     x += 1
-    #   elif direction < 0 and x > 0:
-    #     room_direction = "w"
-    #     x -= 1
-    #   else:
-    #     # If we hit a wall, turn north and reverse direction
-    #     room_direction = "n"
-    #     y += 1
-    #     direction *= -1
-
-    #   # Create a room in the given direction
-    #   room = Room(room_count, "A Generic Room", "This is a generic room.", x, y)
-    #   # Note that in Django, you'll need to save the room after you create it
-
-      # Save the room in the World grid
-
-
-
-
-      #### OLD
-      # # Connect the new room to the previous room
-      # if previous_room is not None:
-      #   previous_room.connect_rooms(room, room_direction)
-
-      # # Update iteration variables
-      # previous_room = room
-      # room_count += 1
-
-
-
   def print_rooms(self):
     '''
     Print the rooms in room_grid in ascii characters.
