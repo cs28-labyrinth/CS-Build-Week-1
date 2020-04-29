@@ -37,14 +37,14 @@ class Room:
         '''
         return getattr(self, f"{direction}_to")
     def check_connections(self, direction):
-      if hasattr(self, f"{direction}_to"):
+      if getattr(self, f"{direction}_to"):
         return True
       return False
 
       
 
 
-
+############## PSEUDOCODE ---- OUT OF DATE
 #### Start at corner 00
 ### Based upon the fact that connect_rooms needs a room object, need to do a full pass of all locations, create rooms, then do the pass to connect them.
 ## two directions aren't possible
@@ -204,8 +204,8 @@ class World:
           ## 10% to get 4th
 
         connection_roll = random.randint(0,10)
-        print('connection_roll')
-        print(connection_roll)
+        # print('connection_roll')
+        # print(connection_roll)
         ###### TO-DO: THIS SHIT DOESN'T WORK. I DON'T UNDERSTAND PERCENT CHANCES WTF???????
         connection_attempts = 0
         if connection_roll <= 1:
@@ -248,34 +248,37 @@ class World:
         print(connection_attempts)
         while connection_attempts > 0:
           connection_complete = False
-          print('we in first while')
+          # print('we in first while')
           while connection_complete is False:
-            print('start of second while')
+            # print('start of second while')
             #Roll for direction  
             direction_roll = random.randint(0,3)
             # print(direction_roll)
             # set directions to array
             directions = [can_n, can_e, can_s, can_w]
+            direction_array = ['n', 'e', 's', 'w']
             # print(directions[direction_roll])
+            print('this is the directions roll')
+            print(directions[direction_roll])
             if directions[direction_roll] == 'open':
               # print('success')
-              directions[direction_roll] = 'connected'
+              # directions[direction_roll] = 'connected'
               ####### UAOLDFKS;LADSF HOW DOES SOME FUCKING IDIOT CONNECT ROOMS
               new_x = curr_x
               new_y = curr_y
               ## Creating new direction
-              if directions[direction_roll] == 'n':
+              if direction_roll == 0: # N
                 new_y = curr_y + 1
-              if directions[direction_roll] == 'e':
+              if direction_roll == 1: # E
                 new_x = curr_x + 1
-              if directions[direction_roll] == 's':
+              if direction_roll == 2: # S
                 new_y = curr_y - 1
-              if directions[direction_roll] == 'w':
+              if direction_roll == 3: # W
                 new_x = curr_x - 1
-              print('we about to shift')
+              print('AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH')
               print(curr_x, curr_y)
               print(new_x, new_y)
-              room.connect_rooms(room[new_y][new_x], directions[direction_roll])
+              room.connect_rooms(room[new_y][new_x], direction_array[direction_roll])
             connection_attempts = connection_attempts - 1
             connection_complete = True
 
