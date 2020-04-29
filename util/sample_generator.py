@@ -116,38 +116,38 @@ class World:
       ## reset x, y+1
       ## need to create first room:
       if x == 0 and y == 0:
-        print('first if')
-        print(x, y)
+        # print('first if')
+        # print(x, y)
         room = Room(room_count, "A Generic Room", "This is a generic room.", x, y)
         self.grid[y][x] = room
         x += 1
         room_count = room_count + 1
 
-        print(x, y)
+        # print(x, y)
       ## Create exit case of last room
       elif y < indexed_height and x == indexed_width:
-        print('first elif')
-        print(x, y)
+        # print('first elif')
+        # print(x, y)
         room = Room(room_count, "A Generic Room", "This is a generic room.", x, y)
         self.grid[y][x] = room
         y += 1
         x = 0
         room_count = room_count + 1
-        print(x, y)
+        # print(x, y)
       elif x < indexed_width:
-        print('second elif')
-        print(x, y)
+        # print('second elif')
+        # print(x, y)
         room = Room(room_count, "A Generic Room", "This is a generic room.", x, y)
         self.grid[y][x] = room
         x += 1
         room_count = room_count + 1
-        print(x, y)
+        # print(x, y)
       elif y == indexed_height and x == indexed_width:
-        print('LAST ONE')
-        print(x, y)
+        # print('LAST ONE')
+        # print(x, y)
         room = Room(room_count, "A Generic Room", "This is a generic room.", x, y)
         self.grid[y][x] = room
-        print(room_count, num_rooms)
+        # print(room_count, num_rooms)
         room_count = room_count+1
       else:
         print('Ive fucked something')
@@ -170,6 +170,8 @@ class World:
     #### Now that rooms are created, we can connect them randomly
     for row in self.grid:
       for room in row:
+        print('starting room connections')
+        print(room.x, room.y)
         # Initalizing variables for examining room connections and blockers
         can_n = 'open'
         can_e = 'open'
@@ -208,19 +210,21 @@ class World:
         connection_attempts = 0
         if connection_roll <= 1:
           connection_attempts = 4
-        elif connection_roll:
+        elif connection_roll > 1 and connection_roll < 5:
           connection_attempts = 3
-        elif connection_roll:
+        elif connection_roll >= 5 and connection_roll < 9:
           connection_attempts = 2
         else:
           connection_attempts = 1
 
         ### If the amount of connections rolled == the current amount of connections, nothing left to do!
         if connection_attempts == curr_connected:
-          return
+          print('were in the connect = curr check')
+          pass
 
         ### Now to check which directions are block
         blocked = 0
+        print('checking blocks')
         if curr_x == 0:
           can_s = 'blocked'
           blocked += 1
@@ -240,9 +244,13 @@ class World:
 
 
         ### NOW IT'S TIME TO MAKE SOME CONNECTIONS, LADIES AND GENTS
+        print('starting connection while loop')
+        print(connection_attempts)
         while connection_attempts > 0:
           connection_complete = False
+          print('we in first while')
           while connection_complete is False:
+            print('start of second while')
             #Roll for direction  
             direction_roll = random.randint(0,3)
             # print(direction_roll)
@@ -268,8 +276,8 @@ class World:
               print(curr_x, curr_y)
               print(new_x, new_y)
               room.connect_rooms(room[new_y][new_x], directions[direction_roll])
-              connection_attempts = connection_attempts - 1
-              connection_complete = True
+            connection_attempts = connection_attempts - 1
+            connection_complete = True
 
 
     # random(1-10) # 10 ^ 2 directions 2 connections
@@ -280,85 +288,6 @@ class World:
     # - Randomly Roll the direction of those connections
 
     # MAKE THOSE CONNECTIONS
-
-
-#### ??
-
-### Blockers/directions available??
-### ???
-###### Variables
-### can_n
-### can_e, etc etc
-
-### Check blockers
-### if x or y are cases = False for the appropriate
-
-# if 
-# if 
-# if
-# if
-
-
-
-#### method on the room - Provides back current links
-
-# if ?????
-# can_# = False
-
-
-# ????? Some number of directions = true
-# random(int) = Roll for how many directions we would TRY to go in.  ???
-
-
-
-###### IDEA 72
-
-# ROLL RANDOM(INT)
-# include x directions ### 3
-
-
-
-## 100% to get first connection
-## 85% to get second connection
-## 60% to get third
-## 10% to get 4th
-    
-    ## get room of room_count ---- Could try the reverse grid section (without reversing) to go row by row in grid
-
-    ## can_n: True
-    ## can_e: True
-    ## can_s: True
-    ## can_w: True
-    ## call get_connections
-      ## need to check if x == 0, or x == width // Blocks connections: y-1, x+1
-      ## need to check if y == 0, or y == height // Blocks connections: x-1, y+1
-      # for each that are considered Blocked, add +1 to connections
-      # flip can_#: False for blocked directions/current directions
-
-    ## Roll random(int) to determine # of connections that will be made.
-
-    #if random is 4 connections:
-      # room.connect_rooms(????????, n) (x, y+1)
-      # room.connect_rooms(?????, e)
-
-
-
-
-
-      # if x < width:
-        
-      #   x += 1
-      #   room_count = room_count + 1
-      # elif y < height and x == width:
-      #   y += 1
-      #   x = 0
-      #   room_count = room_count + 1
-      # elif x < width:
-      #   room = Room(room_count, "A Generic Room", "This is a generic room.", x, y)
-      #   x += 1
-      #   room_count = room_count + 1
-      # elif y == height and x == width:
-      #   pass
 
 
 
@@ -466,6 +395,9 @@ height = 10
 num_rooms = width * height
 w.generate_rooms(width, height, num_rooms)
 w.print_rooms()
-
+print(w.grid[4][5].check_connections('n'))
+print(w.grid[4][5].check_connections('e'))
+print(w.grid[4][5].check_connections('s'))
+print(w.grid[4][5].check_connections('w'))
 
 print(f"\n\nWorld\n  height: {height}\n  width: {width},\n  num_rooms: {num_rooms}\n")
