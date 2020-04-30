@@ -1,37 +1,110 @@
 import random
 
 class Room:
-    def __init__(self, id, name, description, x, y):
-        self.id = id
-        self.name = name
-        self.description = description
-        self.n_to = None
-        self.s_to = None
-        self.e_to = None
-        self.w_to = None
-        self.x = x
-        self.y = y
-    def __repr__(self):
-        if self.e_to is not None:
-            return f"({self.x}, {self.y}) -> ({self.e_to.x}, {self.e_to.y})"
-        return f"({self.x}, {self.y})"
-    def connect_rooms(self, connecting_room, direction):
-        '''
-        Connect two rooms in the given n/s/e/w direction
-        '''
-        reverse_dirs = {"n": "s", "s": "n", "e": "w", "w": "e"}
-        reverse_dir = reverse_dirs[direction]
-        setattr(self, f"{direction}_to", connecting_room)
-        setattr(connecting_room, f"{reverse_dir}_to", self)
-    def get_room_in_direction(self, direction):
-        '''
-        Connect two rooms in the given n/s/e/w direction
-        '''
-        return getattr(self, f"{direction}_to")
-    def check_connections(self, direction):
-      if getattr(self, f"{direction}_to"):
-        return True
-      return False
+  def __init__(self, id, name, description, x, y):
+    self.id = id
+    self.name = name
+    self.description = description
+    self.n_to = None
+    self.s_to = None
+    self.e_to = None
+    self.w_to = None
+    self.x = x
+    self.y = y
+  def __repr__(self):
+    if self.e_to is not None:
+      return f"({self.x}, {self.y}) -> ({self.e_to.x}, {self.e_to.y})"
+    return f"({self.x}, {self.y})"
+  def connect_rooms(self, connecting_room, direction):
+    '''
+    Connect two rooms in the given n/s/e/w direction
+    '''
+    reverse_dirs = {"n": "s", "s": "n", "e": "w", "w": "e"}
+    reverse_dir = reverse_dirs[direction]
+    setattr(self, f"{direction}_to", connecting_room)
+    setattr(connecting_room, f"{reverse_dir}_to", self)
+  def get_room_in_direction(self, direction):
+    '''
+    Connect two rooms in the given n/s/e/w direction
+    '''
+    return getattr(self, f"{direction}_to")
+  def check_connections(self, direction):
+    if getattr(self, f"{direction}_to"):
+      return True
+    return False
+
+# class Fish:
+#     def __init__(self, first_name, last_name="Fish",
+#                  skeleton="bone", eyelids=False):
+#         self.first_name = first_name
+#         self.last_name = last_name
+#         self.skeleton = skeleton
+#         self.eyelids = eyelids
+
+#     def swim(self):
+#         print("The fish is swimming.")
+
+#     def swim_backwards(self):
+#         print("The fish can swim backwards.")
+
+# class Shark(Fish):
+#     def __init__(self, first_name, last_name="Shark",
+#                  skeleton="cartilage", eyelids=True):
+#         self.first_name = first_name
+#         self.last_name = last_name
+#         self.skeleton = skeleton
+#         self.eyelids = eyelids
+
+#     def swim_backwards(self):
+#         print("The shark cannot swim backwards, but can sink backwards.")
+
+
+
+## Most common room, can contain items. Can be dark.
+class Corridor_Room(Room):
+  pass
+  # def __init__(self, id, name, description, x, y):
+  #   self.id = id
+  #   self.name = name
+  #   self.description = description
+  
+  # def 
+
+
+## This needs to use a method on Item - Treasure class to roll it's item.
+class Teasure_Room(Room):
+  pass
+  # def __init__(self, id, name, description, x, y, item=[]):
+    # super().__init__(id, x, y)
+
+    # # setting possible items to room
+    # if item is None:
+    #   self.item = []
+    # else:
+    #   self.item = item
+
+    # def check_treasure(self):
+
+### Need to add value to player character, in order to get the end game leaderboard?
+## Or use some some of method on player that once you hit the "end", it calculates all values of treasures and submits it to leaderboards
+
+
+
+### Build this out into various encounters subclasses??
+class Encounter_Room(Room):
+  pass
+
+class Trap_Room(Room):
+  pass
+
+## This goes through and calculates the end of the game and adds scores to leaderboards? Or provides new command to FE that says "complete game", and uses that EP to complete leaderboard stuff
+class Exit_Room(Room):
+  pass
+
+#### FUTURE RELEASE
+class Shop_Room(Room):
+  pass
+
 
       
 
