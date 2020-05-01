@@ -4,34 +4,23 @@ from adventure.models import Player, Room
 
 Room.objects.all().delete()
 
-r_outside = Room(title="Outside Cave Entrance",
-               description="North of you, the cave mount beckons")
-
-r_foyer = Room(title="Foyer", description="""Dim light filters in from the south. Dusty
-passages run north and east.""")
-
-r_overlook = Room(title="Grand Overlook", description="""A steep cliff appears before you, falling
-into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm.""")
-
-r_narrow = Room(title="Narrow Passage", description="""The narrow passage bends here from west
-to north. The smell of gold permeates the air.""")
-
+r_outside = Room(title="Maze Entrance",
+               description="The entry to the maze beckons you")
+r_foyer = Room(title="The Great Hall", description="""Dim light filters into this Great Hall. Dusty
+passages lead to your next adventure.""")
+r_overlook = Room(title="The Minstrel's Gallery", description="""Musicians and jesters are what you may find here.""")
+r_narrow = Room(title="The Throne Room", description="""This room is the most opulent. The smell of gold permeates the air.""")
 r_treasure = Room(title="Treasure Chamber", description="""You've found the long-lost treasure
-chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south.""")
+chamber! Look around and check to see if there is any treasure left!""")
 
 rooms = [
-  {"title":"Outside Cave Entrance", "description":"North of you, the cave mount beckons"},
-  {"title":"Foyer", "description":"""Dim light filters in from the south. Dusty
-passages run north and east."""},
-{"title":"Grand Overlook", "description":"""A steep cliff appears before you, falling
-into the darkness. Ahead to the north, a light flickers in the distance, but there is no way across the chasm."""},
-{"title":"Narrow Passage", "description":"""The narrow passage bends here from west
-to north. The smell of gold permeates the air."""},
+  {"title":"Maze Entrance", "description":"The entry to the maze beckons you"},
+  {"title":"The Great Hall", "description":"""Dim light filters into this Great Hall. Dusty
+passages lead to your next adventure."""},
+{"title":"The Minstrel's Gallery", "description":"""Musicians and jesters are what you may find here."""},
+{"title":"The Throne Room", "description":"""This room is the most opulent. The smell of gold permeates the air."""},
 {"title":"Treasure Chamber", "description":"""You've found the long-lost treasure
-chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""}]
+chamber! Look around and check to see if there is any treasure left!"""}]
 
 
 r_outside.save()
