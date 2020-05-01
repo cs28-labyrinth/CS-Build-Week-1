@@ -70,30 +70,6 @@ def rooms(request):
 @api_view(["POST"])
 def say(request):
     # IMPLEMENT
-<<<<<<< HEAD
-    return JsonResponse({'error':"Not yet implemented"}, safe=True, status=500)
-
-
-#Put items/treasures in a room on initialize?
-
-#Get a list of the items in a room
-@csrf_exempt
-@api_view(["GET"])
-def room_items(request):
-    player = request.user.player
-    room = player.room()     
-    return JsonResponse({'rooms has items': room.room_item}, safe=True)
-
-#Get a list of the items a player has/is carrying
-@csrf_exempt
-@api_view(["GET"])
-def player_items(request):
-    player = request.user.player    
-    return JsonResponse({'player has items': player.player_items}, safe=True)
-    
-
-
-=======
     user = request.user
     player = user.player
     player_id = player.id
@@ -106,4 +82,3 @@ def player_items(request):
 
     return JsonResponse({'user': user.username, 'message':f'{data["message"]}'})
     # return JsonResponse({'error':"Not yet implemented"}, safe=True, status=500)
->>>>>>> 3686c530d001d2a574f7601235c2f855e59d9073
