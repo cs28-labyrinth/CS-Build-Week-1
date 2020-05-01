@@ -21,7 +21,8 @@ def initialize(request):
     uuid = player.uuid
     room = player.room()
     players = room.playerNames(player_id)
-    return JsonResponse({'uuid': uuid, 'name':player.user.username, 'title':room.title, 'description':room.description, 'players':players}, safe=True)
+
+    return JsonResponse({'uuid': uuid, 'name':player.user.username,'title':room.title, 'description':room.description, 'players':players}, safe=True)
 
 
 # @csrf_exempt
@@ -51,6 +52,8 @@ def move(request):
         players = nextRoom.playerNames(player_id)
         currentPlayerUUIDs = room.playerUUIDs(player_id)
         nextPlayerUUIDs = nextRoom.playerUUIDs(player_id)
+        for p in Player.objects.all():
+            pusher.trigger(f'p-channel-{p.uuid}', u'move',{"uuid": str(player_uuid), "current_room": player.currentRoom})
         for p_uuid in currentPlayerUUIDs:
             pusher.trigger(f'p-channel-{p_uuid}', u'broadcast', {'message':f'{player.user.username} has walked {dirs[direction]}.'})
         for p_uuid in nextPlayerUUIDs:
@@ -67,6 +70,26 @@ def rooms(request):
     return JsonResponse({'rooms': json.loads(data)})
 
 @csrf_exempt
+@api_view(["GET"])
+def enter(request):   
+    player = request.user.player
+    player_uuid = player.uuid
+    players = Player.objects.all()    
+    for p in players:
+            pusher.trigger(f'p-channel-{p.uuid}', u'enter',{"uuid": str(player_uuid), "current_room": player.currentRoom})
+    return JsonResponse({"entered": "room"})
+
+@csrf_exempt
+@api_view(["GET"])
+def exit(request):   
+    player = request.user.player
+    player_uuid = player.uuid
+    players = Player.objects.all()    
+    for p in players:
+            pusher.trigger(f'p-channel-{p.uuid}', u'exit',{"uuid": str(player_uuid), "current_room": player.currentRoom})
+    return JsonResponse({"exit": "room"})
+
+@csrf_exempt
 @api_view(["POST"])
 def say(request):
     # IMPLEMENT
@@ -77,8 +100,9 @@ def say(request):
     # currentPlayerUUIDs = room.playerUUIDs(player_id)
     currentPlayerUUIDs = room.playerUUIDs(-1)
     data = json.loads(json.dumps(request.data))
-    for p_uuid in currentPlayerUUIDs:
-        pusher.trigger(f'p-channel-{p_uuid}', u'broadcast', {'user': user.username, 'message':data["message"]})
+
+    for p in Player.objects.all():
+        pusher.trigger(f'p-channel-{p.uuid}', u'broadcast', {'user': user.username, 'message':data["message"]})
 
     return JsonResponse({'user': user.username, 'message':f'{data["message"]}'})
     # return JsonResponse({'error':"Not yet implemented"}, safe=True, status=500)

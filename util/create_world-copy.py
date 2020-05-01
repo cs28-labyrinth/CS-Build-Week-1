@@ -76,27 +76,31 @@ def connect_room(rm):
      b = rm.j - rm.prev.j
      grid[rm.prev.i + a //2][rm.prev.j + b //2]= " "     
      # from prev to east
-     if a == 2:
+     if b == 2:
       #  rm.prev.e_to = grid[rm.i][rm.j]
       #  grid[rm.i][rm.j].w_to = rm
        rm.prev.rm.connectRooms(grid[rm.i][rm.j].rm, "e")
        grid[rm.i][rm.j].rm.connectRooms(rm.prev.rm, "w")
      # from prev to west
-     elif a == -2:
+     elif b == -2:
       #  rm.prev.w_to = grid[rm.i][rm.j]
       #  grid[rm.i][rm.j].e_to = rm
        rm.prev.rm.connectRooms(grid[rm.i][rm.j].rm, "w")
        grid[rm.i][rm.j].rm.connectRooms(rm.prev.rm, "e")
-     elif b == 2:
+     elif a == 2:
       #  rm.prev.s_to = grid[rm.i][rm.j]
       #  grid[rm.i][rm.j].n_to = rm
        rm.prev.rm.connectRooms(grid[rm.i][rm.j].rm, "s")
        grid[rm.i][rm.j].rm.connectRooms(rm.prev.rm, "n")
-     elif b == -2:
+
+ 
+     elif a == -2:
       #  rm.prev.n_to = grid[rm.i][rm.j]
       #  grid[rm.i][rm.j].s_to = rm
        rm.prev.rm.connectRooms(grid[rm.i][rm.j].rm, "n")
        grid[rm.i][rm.j].rm.connectRooms(rm.prev.rm, "s")
+     
+
 
 import random
 
@@ -126,5 +130,9 @@ for i in range(height):
   print()
 
 
+players=Player.objects.all()
+for p in players:
+  p.currentRoom=grid[1][1].rm.id
+  p.save()
 
   
